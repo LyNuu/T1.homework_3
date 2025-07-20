@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.AutoConfiguration.imports
+org.example.command.module.config.AutoConfigCommandModule;
+org.example.audit.android.module.audit.config.AuditConfig;
+org.example.android.monitoring.module.config.MonitoringConfig;
