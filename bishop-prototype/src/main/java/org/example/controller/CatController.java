@@ -29,14 +29,14 @@ public class CatController {
     @WeylandWatchingYou(name = "kafka")
     public ResponseEntity<CatDto> createCat(@RequestBody CatDto catDto,
                                             @RequestParam(name = "author") String author,
-                                            @RequestParam(name = "priority") String priority) throws JsonProcessingException {
+                                            @RequestParam(name = "priority") Priority priority) throws JsonProcessingException {
         monitoringService.submitTask(() -> {
             Statistics.incrementCompletedTasks(author);
         });
         producerCommand.sendCommand(Command.builder()
                 .author(author)
                 .description("method: create cat")
-                .priority(Priority.valueOf(priority))
+                .priority(priority)
                 .time(LocalDate.now().toString())
                 .build());
         return ResponseEntity.ok(catService.save(catDto));
