@@ -16,48 +16,16 @@
 
 ## ⚙️ Запуск окружения
 
-### 1. 🐳 Kafka (Docker)
+### 1. 🐳 Kafka (Docker) и PostgreSQL (Docker)
 
-Создайте файл `docker-compose.yml` и вставьте следующий конфигурационный блок:
+Перейдите в файл `src/main/resources/docker-compose.yml` и запустите код данного файла:
 
-```yaml
-version: '3'
-services:
-  broker:
-    image: apache/kafka:latest
-    container_name: broker
-    ports:
-      - "9092:9092"
-      - "9093:9093"
-    environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_NUM_PARTITIONS: 3
-```
+После чего у Вас в Docker поднимится БД и Kafka с которой вы будите работать. 
 
-### 2. 🐘 PostgreSQL (Docker)
 
-Приложение использует PostgreSQL. Запустите базу данных:
-
-```bash
-docker run --name pg-cat-db \
-  -e POSTGRES_USER=postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=postgres \
-  -p 5444:5432 \
-  -d postgres:latest
-```
 
 ## Важно! 
-Настройки в application.properties соответсствуют скриптам данной инструкции.
+Настройки в application.properties соответсствуют скриптам `docker-compose.yml`.
 Если захотите изменить что-то, не забудьте это изменить в application.properties Вашего приложения.
 
 ### 3. 🧱 Установка стартера
